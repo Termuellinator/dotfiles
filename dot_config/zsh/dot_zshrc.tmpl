@@ -71,12 +71,23 @@ zsh_add_plugin "hlissner/zsh-autopair"
 # zsh_add_completion "esc/conda-zsh-completion" false
 # For more plugins: https://github.com/unixorn/awesome-zsh-plugins
 # More completions https://github.com/zsh-users/zsh-completions
+
+{{ if eq .chezmoi.osRelease.id "debian" }}
+# Use Autosuggestions
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# Use syntax highlighting
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Use history substring search
+zsh_add_plugin "zsh-users/zsh-history-substring-search"
+{{ else }}
 # Use Autosuggestions
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Use syntax highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Use history substring search
 source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+{{ end }}
+
 # bind UP and DOWN arrow keys to history substring search
 zmodload zsh/terminfo
 
