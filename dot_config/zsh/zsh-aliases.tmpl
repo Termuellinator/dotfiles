@@ -1,11 +1,7 @@
 #!/bin/sh
-# alias j='z'
-# alias f='zi'
-# alias g='lazygit'
+
 alias zsh-update-plugins="find "$ZDOTDIR/plugins" -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull -q"
 alias nvimrc='nvim ~/.config/nvim/'
-
-# alias lvim='nvim -u ~/.local/share/lunarvim/lvim/init.lua --cmd "set runtimepath+=~/.local/share/lunarvim/lvim"'
 
 # get fastest mirrors
 alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
@@ -13,11 +9,6 @@ alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/p
 alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
 alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
 alias mirrorde='sudo reflector -c "DE" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist'
-
-
-# Remarkable
-# alias remarkable_ssh='ssh root@10.11.99.1'
-# alias restream='restream -p'
 
 # Colorize grep output (good for log files)
 alias grep='grep --color=auto'
@@ -52,11 +43,6 @@ alias archlinux-fix-keys="sudo pacman-key --init && sudo pacman-key --populate a
 # systemd
 alias list_systemctl="systemctl list-unit-files --state=enabled"
 
-# alias mach_java_mode="export SDKMAN_DIR="$HOME/.sdkman" && [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh""
-# 
-# alias m="git checkout master"
-# alias s="git checkout stable"
-
 # pdnsd-ctl needs to use the same cache dir as set in /etc/pdnsd.config
 alias pdnsd-ctl='pdnsd-ctl -c /var/cache/pacman/pkg/pdnsd'
 
@@ -64,8 +50,7 @@ alias pdnsd-ctl='pdnsd-ctl -c /var/cache/pacman/pkg/pdnsd'
 alias git-graph='git log --all --oneline --graph'
 
 alias sudo='sudo '
-alias lsd='lsd'
-#alias ls='lsd --group-dirs first'
+
 {{ if eq .chezmoi.osRelease.id "debian" }}
 alias ls='exa'
 alias lgit='exa --long --git'
@@ -77,17 +62,19 @@ alias lgit='eza --long --git'
 alias ltgit='eza --long --git --tree --all --ignore-glob=".git"'
 alias cat="bat"
 {{ end }}
+
 alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
+
 alias iotop='sudo iotop'
 alias nethogs='sudo nethogs'
+
 alias .='cd ..'
 alias ..='cd ../..'
 alias ...='cd ../../..'
-alias pacup='sudo pacman -Syu'
-alias aurup='paru -Sua'
+
 alias downgrade='sudo downgrade --pacman-cache /var/cache/pacman/pkg --pacman-cache /var/cache/pacman/pkg/paru --pacman-cache /var/cache/pacman/pkg/yay/'
 alias paccache='paccache --cachedir /var/cache/pacman/pkg/yay/ --cachedir /var/cache/pacman/pkg/paru/ --cachedir /var/cache/pacman/pkg/' 
 alias orphan='pacman -Qdtq'
@@ -100,13 +87,6 @@ alias code="flatpak run com.vscodium.codium "
 alias tardis='wol -v -p 9 6C:4B:90:4C:47:5E'
 # shutdown tardis
 alias tardis_sd='ssh tardis shutdown'
-
-# zip world save and copy it to downloads
-alias dw_backup='ssh direnub "zip -r - /home/termy/direwolf/world /home/termy/direwolf/config /home/termy/direwolf/server.properties" > /home/termy/Downloads/dw_backup_$(date +"%Y_%m_%d").zip'
-
-alias enc_backup='ssh hellman "zip -r - /home/termy/encrypted/world /home/termy/encrypted/config /home/termy/encrypted/server.properties" > /home/termy/Downloads/encrypted_backup_$(date +"%Y_%m_%d").zip'
-
-alias sky_backup='ssh hellman "zip -r - /home/termy/skycapsule/world /home/termy/skycapsule/config /home/termy/skycapsule/server.properties" > /home/termy/Downloads/skycapsule_backup_$(date +"%Y_%m_%d").zip'
 
 # run ollama with custom model directory
 alias ollama_serve='OLLAMA_MODELS=/media/vms/ollama ollama serve'
