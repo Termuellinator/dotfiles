@@ -141,4 +141,4 @@ autoload edit-command-line; zle -N edit-command-line
 [ -x $(command -v thefuck) ] && eval $(thefuck --alias)
 
 # load zoxide
-[ -x $(command -v zoxide) ] && eval $(zoxide init zsh)
+[ -x $(command -v zoxide) ] && eval "$(zoxide init zsh)"
