@@ -138,7 +138,10 @@ autoload edit-command-line; zle -N edit-command-line
 # bindkey '^e' edit-command-line
 
 # thefuck alias
-[ -x $(command -v thefuck) ] && eval $(thefuck --alias)
+[ -x $(command -v thefuck) ] && eval "$(thefuck --alias)"
 
 # load zoxide
 [ -x $(command -v zoxide) ] && eval "$(zoxide init zsh)"
+
+# load atuin
+[ -x $(command -v atuin) ] && eval "$(atuin init zsh --disable-up-arrow)"
