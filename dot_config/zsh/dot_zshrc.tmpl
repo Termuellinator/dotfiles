@@ -114,7 +114,12 @@ bindkey '^[Oc' forward-word                                     #
 bindkey '^[Od' backward-word                                    #
 bindkey '^[[1;5D' backward-word                                 #
 bindkey '^[[1;5C' forward-word                                  #
+{{ if eq (env "XDG_CURRENT_DESKTOP") "LXQt" -}}
+# LXQt specific settings because qterminal has ctrl-backspace swapped
+bindkey '^?' backward-kill-word                                 # delete previous word with ctrl+backspace
+{{- else -}}
 bindkey '^H' backward-kill-word                                 # delete previous word with ctrl+backspace
+{{- end }}
 bindkey '^[[Z' undo                                             # Shift+tab undo last action                                     # Shift+tab undo last action
 
 bindkey "$terminfo[kcuu1]" history-substring-search-up          # bind up and down to substring search
