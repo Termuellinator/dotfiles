@@ -1,0 +1,66 @@
+# cd Stack management
+#
+# You `cd` around like you normally would, and the directories are pushed
+# into a stack.  Use the function `s` to view the stack of directories,
+# and run `s $num` to `cd` into the directory listed.
+#
+# Adapted to zsh from https://github.com/bahamas10/bash-cdstack
+# inspired by http://www.derekwyatt.org/2011/08/18/my-bash-directory-management/
+#
+# Author: Dave Eddy <dave@daveeddy.com>
+# License: MIT
+
+
+# config
+CD_STACK_MAX=${CD_STACK_MAX:-15}
+#CD_STACK_REVERSE=   # set by environment
+
+# internal
+typeset -ga _CD_STACK
+typeset -gi _CD_STACK_PTR
+_CD_STACK=("$PWD")
+_CD_STACK_PTR=1  # Start at 1 for zsh
+
+cd() {
+    builtin cd "$@"
+    local ret=$?
+    ((ret == 0)) || return $ret
+
+    _CD_STACK=("$PWD" "${_CD_STACK[@]}")
+    if ((${#_CD_STACK[@]} > CD_STACK_MAX)); then
+        _CD_STACK[-1]=()
+    fi
+    _CD_STACK_PTR=1  # Reset to 1 after each cd
+
+    return $ret
+}
+
+s() {
+    if [[ -n $1 ]]; then
+        local dir=${_CD_STACK[$1+1]}  # Add 1 to align with zsh indexing
+        builtin cd "$dir"
+        local ret=$?
+        if ((ret == 0)) && [[ -n $dir ]]; then
+            _CD_STACK_PTR=$1+1  # Add 1 to align with zsh indexing
+        fi
+        return $ret
+    fi
+
+    local max=${#_CD_STACK[@]}
+    local i
+    local arrow=$'\e[32m->\e[0m'  # Green arrow using ANSI escape codes
+    for ((i = 1; i <= max; i++)); do  # Start from 1 and use <= for zsh
+        local j=$i
+        [[ -n $CD_STACK_REVERSE ]] && j=$((max - i + 1))  # Adjust reverse calculation
+        if ((j == _CD_STACK_PTR)); then
+            print -n "$arrow"
+        else
+            print -n '  '
+        fi
+        printf '%2d: %s\n' $((j-1)) "${_CD_STACK[$j]/#$HOME/~}"  # Subtract 1 for display
+    done
+}
+
+b() {
+    s $((_CD_STACK_PTR))  # Remove the +1 here
+}
