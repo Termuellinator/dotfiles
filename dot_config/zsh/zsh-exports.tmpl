@@ -4,6 +4,13 @@
 HISTSIZE=1000000
 SAVEHIST=1000000
 export PATH="$HOME/.local/bin":$PATH
+
+{{ if eq .chezmoi.osRelease.id "debian" }}
+if [ -d ~/.atuin ]; then
+    export PATH="$HOME/.atuin/bin":$PATH
+fi
+{{ end }}
+
 export MANPAGER='nvim +Man!'
 export MANWIDTH=999
 # export PATH=$HOME/.cargo/bin:$PATH
