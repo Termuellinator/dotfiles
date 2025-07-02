@@ -49,8 +49,6 @@ alias pdnsd-ctl='pdnsd-ctl -c /var/cache/pacman/pkg/pdnsd'
 # some git specific aliases
 alias git-graph='git log --all --oneline --graph'
 
-alias sudo='sudo '
-
 alias ls='eza'
 alias lgit='eza --long --git'
 alias ltgit='eza --long --git --tree --all --ignore-glob=".git"'
@@ -79,6 +77,10 @@ alias py='python'
 alias protontricks-flat='flatpak run com.github.Matoking.protontricks'
 alias code="flatpak run com.vscodium.codium "
 
-{{ if eq .chezmoi.osRelease.id "debian" }}
+{{- if eq .chezmoi.osRelease.id "debian" }}
 alias update_zellij='curl --location "https://github.com/zellij-org/zellij/releases/latest/download/zellij-x86_64-unknown-linux-musl.tar.gz" | tar -C "$HOME/.local/bin" -xz'
+{{ end }}
+
+{{- if stat "/usr/bin/sudo-rs" }}
+alias sudo='sudo-rs'
 {{ end }}
